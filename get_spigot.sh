@@ -1,9 +1,11 @@
 #! /bin/bash
+# gemaakt door niels huisman ofzo
 
 if [ -z "$1" ]
   then
     echo "No argument supplied."
-    echo "Usage: get_spigot output_file [version]"
+    echo "Usage: get_spigot <output_file> [version]"
+    exit 2
 fi
 
 
