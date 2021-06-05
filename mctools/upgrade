@@ -1,0 +1,22 @@
+#!/bin/bash
+cd ~/server
+
+port="$1"
+pass="$2"
+
+rcon () {
+  /usr/local/mctools/mcrcon -H localhost -P "$port" -p "$pass" "$1"
+}
+
+rcon "say Upgrading server. Server restarts in 2 minutes."
+
+/usr/local/mctools/get_spigot new_server.jar latest
+
+for i in {10..1..1};do rcon "say Restarting in $i..." && sleep 1; done
+
+rcon "stop"
+sleep 30
+rm server.jar
+mv new_server.jar server.jar
+
+tmux new-session -d -s $USER '/usr/local/mctools/start $port $pass'

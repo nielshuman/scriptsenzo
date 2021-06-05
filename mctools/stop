@@ -1,0 +1,14 @@
+#!/bin/bash
+
+port="$1"
+pass="$2"
+
+rcon () {
+  /usr/local/mctools/mcrcon -H localhost -P "$port" -p "$pass" "$1"
+}
+
+rcon "say dikke doei"
+sleep 2
+rcon "stop"
+sleep 7
+

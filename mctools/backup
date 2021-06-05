@@ -1,0 +1,25 @@
+#!/bin/bash
+
+port="$1"
+pass="$2"
+
+rcon () {
+  /usr/local/mctools/mcrcon -H localhost -P "$port" -p "$pass" "$1"
+}
+
+rcon "say Backuping in 1 min..."
+sleep 30
+rcon "say Backuping in 30 sec..."
+sleep 25
+for i in {5..1..1};do rcon "say Backuping in $i..." && sleep 1; done
+
+rcon "save-off"
+rcon "save-all"
+sleep 5
+txz ~/server > ~/backups/$USER-$(date +%F-%H-%M).tar.xz
+rcon "say Backup done!"
+rcon "save-on"
+
+## Delete older backups
+find ~/backups/ -type f -mtime +3 -name '*.xz' -delete
+
